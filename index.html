@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get Well Soon</title>
+    <style>
+      :root {
+        --primary-color: #ff6b6b;
+        --secondary-color: #4ecdc4;
+        --accent-color: #ffe66d;
+      }
+      body {
+        font-family: "Comic Neue", cursive;
+        text-align: center;
+        background: linear-gradient(45deg, #54074b, #7eaa32, #024f76);
+        color: white;
+        position: relative;
+        animation: gradientBG 15s ease infinite;
+      }
+
+      @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+      .card {
+        background: black;
+        padding: 20px;
+        margin: 20px auto;
+        width: 60%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        transform-style: preserve-3d;
+            animation: cardEntrance 1s ease-out;
+      }
+      @keyframes cardEntrance {
+            0% { transform: translateY(100px) rotateX(90deg); opacity: 0; }
+            100% { transform: translateY(0) rotateX(0); opacity: 1; }
+        }
+
+      .progress-container {
+        width: 80%;
+        background: #ddd;
+        border-radius: 20px;
+        margin: 20px auto;
+        overflow: hidden;
+      }
+      .progress-bar {
+        width: 30%;
+        height: 20px;
+              background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+      }
+
+      .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressGlow 2s infinite;
+        }
+
+        @keyframes progressGlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+      .gift-box {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        width: 100px;
+      }
+      .gift-box img {
+        width: 100px;
+      }
+      .lid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 50px;
+         border-radius: 10px 10px 0 0;
+        transition: transform 0.5s;
+      }
+
+      .gift-box:hover {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+
+      .opene.lid {
+        transform: translateY(-30px);
+      }
+      .hidden {
+        display: none;
+      }
+      @keyframes popDown {
+        0% {
+          transform: translateY(-100px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .surprise-container {
+        position: relative;
+        top: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: popDown 1s ease-in-out;
+      }
+      @keyframes loveAnimation {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.5);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+      .love-emoji {
+        position: absolute;
+        font-size: 40px;
+        animation: loveAnimation 1s ease-out;
+      }
+      .friend {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--primary-color);
+        margin: 1rem auto;
+        animation: photoPulse 2s ease-in-out infinite;
+        box-shadow: 0 0 20px rgba(74, 1, 152, 0.3);
+      }
+      @keyframes photoPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+
+      .get-well-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .get-well-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: btnShine 3s infinite;
+        }
+
+        @keyframes btnShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .magic-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: particleFloat 1.5s ease-out forwards;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
+        }
+    </style>
+    <script>
+      function increaseProgress() {
+        setTimeout(() => {
+          document.querySelector(".progress-bar").style.width = "100%";
+        }, 1000);
+      }
+      function togglePill(pill) {
+        pill.classList.toggle("taken");
+      }
+      function openGift() {
+        document.querySelector(".gift-box").classList.add("opened");
+        let surpriseImage = document.getElementById("surpriseImage");
+        surpriseImage.classList.remove("hidden");
+        surpriseImage.style.top = "50px";
+      }
+
+      function createMagic() {
+            const particles = ['❤', '⚡', '🌟', '🎈', '🌸','😍'];
+            for(let i = 0; i < 500; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'magic-particle';
+                particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                particle.style.fontSize = Math.random() * 20 + 10 + 'px';
+                particle.style.animationDuration = Math.random() * 0.9 + 0.9 + 's';
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+      function changeBackground() {
+        document.body.style.backgroundColor = "#ffcccb";
+        let love = document.createElement("div");
+        love.innerHTML = "❤️";
+        love.classList.add("love-emoji");
+        love.style.left = Math.random() * window.innerWidth + "px";
+        love.style.top = Math.random() * window.innerHeight + "px";
+        document.body.appendChild(love);
+        setTimeout(() => love.remove(), 1000);
+      }
+
+      let progress = 30;
+        setInterval(() => {
+            progress = Math.min(progress + 0.5, 100);
+            document.getElementById('progressBar').style.width = progress + '%';
+        }, 5000);
+
+       
+
+    </script>
+  </head>
+  <body onload="increaseProgress()">
+   
+
+    <h1>💖 Get Well Soon, ANUJA ! 💖</h1>
+
+    <div class="card" onclick="changeBackground()">
+      <h2>A Special Message for You</h2>
+      <p>
+        Hey Anuja, just a little note to remind you how much you are loved.
+        Wishing you a speedy recovery! 💕
+      </p>
+      <img
+        src="image.png"
+        alt="Get Well Soon Image"
+        class="friend"
+        height="300px"
+        width="300px"
+      />
+      <p >
+        लवकर बरी हो Anuja! 💖🌸
+
+अनुजा, तुझ्या हास्याने फुलते सगळी दुनिया,
+तुझ्या उर्जेने होते आनंदाची जादूगिरी नवीया.
+आज जरी तू थोडीशी शांत आहेस,
+उद्या पुन्हा तुझ्या ऊर्जेने गजबजेल आभास.
+
+हळूच डोळे मिटून विश्रांती घे,
+आमच्या प्रेमाने तुला बळ मिळू दे.
+थोड्याच दिवसांत तुझ्या हास्यात,
+संपेल आजाराचा हा प्रवास.
+
+आम्ही सगळे तुझी वाट पाहतो,
+लवकर बरी हो, हाच एक मंत्र म्हणतो! 💕✨
+
+लवकर बरी हो! 💖🌷
+      </p>
+    </div>
+   
+
+    <div class="card">
+      <h2>Recovery Progress 🌿</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar" style="width: 30%"></div>
+
+       </div>
+    </div>
+
+    <div id="surpriseImage" class="surprise-container hidden">
+        <img src="soon.png" alt="Surprise!" height="250px" width="250px" />
+      </div>
+
+      <br><br><br>
+    <button class="get-well-btn" onclick="createMagic()">
+        ✨ click Super Healing Vibes ✨
+    </button>
+
+    <div class="card">
+      <h2>Virtual Gift 🎁</h2>
+      <p >Click to open!</p>
+      <div class="gift-box" onclick="openGift()">
+        <div class="lid"></div>
+        <img src="gift.png" alt="Gift Box"  />
+      </div>
+    </div>
+    <p>from <h2>HARSH 😍</h2></p>
+  </body>
+</html>
